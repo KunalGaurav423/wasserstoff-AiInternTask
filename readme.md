@@ -29,6 +29,8 @@ Before you begin, ensure you have met the following requirements:
 
 Install dependencies:
 npm install
+
+
 Set up MongoDB:
 
 Ensure MongoDB is running locally or configure it for a remote database.
