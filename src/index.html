@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PDF Case Viewer</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 20px;
+            background-color: #f9f9f9;
+        }
+        h1 {
+            color: #333;
+        }
+        .case {
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+        .case h2 {
+            margin: 0;
+            font-size: 1.5em;
+            color: #0056b3;
+        }
+        .case p {
+            margin: 5px 0;
+        }
+        .case a {
+            color: #007bff;
+            text-decoration: none;
+        }
+        .case a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>PDF Case Viewer</h1>
+    <div id="case-container"></div>
+
+    <script>
+        const data = 
+        [
+            {
+                "0": {
+                    "name": "Commissioner of Income Tax West Bengal vs Calcutta Agency",
+                    "size": "635kb",
+                    "url": "https://digiscr.sci.gov.in/pdf_viewer?dir=YWRtaW4vanVkZ2VtZW50X2ZpbGUvanVkZ2VtZW50X3BkZi8xOTUwL3ZvbHVtZSAxL1BhcnQgSS9Db21taXNzaW9uZXIgb2YgSW5jb21lIFRheCwgV2VzdCBCZW5nYWxfQ2FsY3V0dGEgQWdlbmN5IEx0ZC5fMTY5NzYwNjMxMC5wZGY=",
+                    "summary": "The Commissioner of Income-tax, West Bengal, appealed to the Supreme Court of India against a judgment of the Calcutta High Court, which had allowed the assessee, Calcutta Agency Ltd., to deduct a sum of Rs. 22,500 from its income as an expenditure incurred for the purpose of its business.",
+                    "pdf_pages": "11",
+                    "createdAt": "2024-10-21T14:42:23.078Z"
+                }
+            },
+            {
+                "1": {
+                    "name": "The State of Bihar vs MAHARAJADHIRAJA SIR KAMESHWAR SINGH OF Darbhanga AND OTHERS",
+                    "size": "5.1mb",
+                    "url": "https://digiscr.sci.gov.in/pdf_viewer?dir=YWRtaW4vanVkZ2VtZW50X2ZpbGUvanVkZ2VtZW50X3BkZi8xOTUyL3ZvbHVtZSAxL1BhcnQgSS90aGUgc3RhdGUgb2YgYmloYXJfbWFoYXJhamFkaGlyYWphIHNpciBrYW1lc2h3YXIgc2luZ2ggb2YgZGFyYmhhbmdhIGFuZCBvdGhlcnNfMTY5ODMxODQ0OC5wZGY=",
+                    "summary": "The Supreme Court upheld the Bihar Land Reforms Act, 1950, affirming its constitutional validity while striking down certain provisions.",
+                    "pdf_pages": "131 pages",
+                    "createdAt": "2024-10-21T14:42:23.078Z"
+                }
+            },
+            {   '2': {
+                    "name": 'THE CONSTITUTION OF INDIA',
+                    "size": '2.3mb',
+                    "url": 'https://cdnbbsr.s3waas.gov.in/s380537a945c7aaa788ccfcdf1b99b5d8f/uploads/2024/07/20240716890312078.pdf',
+                    "summary": "A comprehensive document that outlines the political and legal framework of India, amended to meet the country's evolving needs.",
+                    "pdf_pages": '402 pages',
+                    "createdAt": '2024-10-21T15:04:50.534Z'
+                }
+            },
+            {   '3': {
+                    "name": 'ministry of law and justice',
+                    "size": '1293mb',
+                    "url": 'https://www.mha.gov.in/sites/default/files/250883_english_01042024.pdf',
+                    "summary": 'Plays a crucial role in upholding the rule of law and ensuring justice in India, collaborating with various government agencies.',
+                    "pdf_pages": '102 pages',
+                    "createdAt":'2024-10-21T15:04:50.534Z'
+                }
+            },
+            
+            {   '4': {
+                    "name": 'RBI appoints Smt. Charulatha S Kar as new Executive Director',
+                    "size": '327kb',
+                    "url": 'https://rbidocs.rbi.org.in/rdocs/PressRelease/PDFs/PR60974A2ED1DFDB84EC0B3AABFB8419E1431.PDF',
+                    "summary": 'Smt. Charulatha S. Kar appointed as Executive Director at RBI, overseeing key departments including HR and communication.',      
+                    "pdf_pages": '1 page',
+                    "createdAt":'2024-10-21T15:04:50.534Z'
+                }       
+            },
+            {    '5': {
+                    "name": 'THE TATA OIL MILLS CO. LTD vs ITS WORKMEN',
+                    "size": '458kb',
+                    "url": 'https://digiscr.sci.gov.in/pdf_viewer?dir=YWRtaW4vanVkZ2VtZW50X2ZpbGUvanVkZ2VtZW50X3BkZi8xOTYwL3ZvbHVtZSAxL1BhcnQgSS90aGUgdGF0YSBvaWwgbWlsbHMgY28uIGx0ZC5faXRzIHdvcmttZW4gYW5kIG90aGVyc18xNjk5MzMzODYyLnBkZg==',
+                    "summary": 'Supreme Court clarified guidelines for bonus calculation in industrial disputes, emphasizing profit relations and prior deductions.',
+                    "pdf_pages": '13 pages',
+                    "createdAt":'2024-10-21T15:04:50.534Z'
+                }    
+            },
+            {
+                '6': {
+                    "name": 'GREAT INDIAN MOTOR WORKS LTD AND ANOTHER vs THEIR EMPLOYEES',
+                    "size": '458kb',
+                    "url": 'https://digiscr.sci.gov.in/pdf_viewer?dir=YWRtaW4vanVkZ2VtZW50X2ZpbGUvanVkZ2VtZW50X3BkZi8xOTYwL3ZvbHVtZSAxL1BhcnQgSS9ncmVhdCBpbmRpYW4gbW90b3Igd29ya3MgbHRkLiwgYW5kIGFub3RoZXJfdGhlaXIgZW1wbG95ZWVzIGFuZCBvdGhlcnNfMTY5OTMzNjM1NS5wZGY=',
+                    "summary": 'The Court upheld an award in favor of employees, relating to wages and working conditions.',
+                    "pdf_pages": '8 pages',
+                    "createdAt":'2024-10-21T15:04:50.534Z'
+                }
+            },
+            {   '7': {
+                    "name": "MESSRS. ISPAHANI LTD. CALCUTTA v. ISP AHANI EMPLOYEES' UNION",
+                    "size": '292kb',
+                    "url": 'https://digiscr.sci.gov.in/pdf_viewer?dir=YWRtaW4vanVkZ2VtZW50X2ZpbGUvanVkZ2VtZW50X3BkZi8xOTYwL3ZvbHVtZSAxL1BhcnQgSS9tZXNzcnMuIGlzcGFoYW5pIGx0ZC4gY2FsY3V0dGFfaXNwYWhhbmkgZW1wbG95ZWVzICB1bmlvbl8xNjk5MzM4NTQ5LnBkZg==',
+                    "summary": "The case involved an industrial dispute regarding wages and conditions between Ispahani Ltd. and its employees' union.",
+                    "pdf_pages": '8 pages',
+                    "createdAt": '2024-10-21T15:04:50.534Z'
+                }
+            },
+            {   '8': {
+                    "name": 'SUPREME COURT REPORTS [1960(1)] PHULBARI TEA ESTATE v. ITS WORKMEN',
+                    "size": '303kb',
+                    "url": 'https://digiscr.sci.gov.in/pdf_viewer?dir=YWRtaW4vanVkZ2VtZW50X2ZpbGUvanVkZ2VtZW50X3BkZi8xOTYwL3ZvbHVtZSAxL1BhcnQgSS9waHVsYmFyaSB0ZWEgZXN0YXRlX2l0cyB3b3JrbWVuXzE2OTkzMzkyMjYucGRm',
+                    "summary": 'Dealt with an industrial dispute between Phulbari Tea Estate and its workers.',
+                    "pdf_pages": '8 pages',
+                    "createdAt": '2024-10-21T15:04:50.534Z'
+                }
+            },
+            {
+                '9': {
+                    "name": 'THE LORD KRISHNA SUGAR MILLS LTD. v. THE UNION OF INDIA',
+                    "size": '2.0mb',
+                    "url": 'https://digiscr.sci.gov.in/pdf_viewer?dir=YWRtaW4vanVkZ2VtZW50X2ZpbGUvanVkZ2VtZW50X3BkZi8xOTYwL3ZvbHVtZSAxL1BhcnQgSS90aGUgbG9yZCBrcmlzaG5hIHN1Z2FyIG1pbGxzIGx0ZC4sIGFuZCBhbm90aGVyX3RoZSB1bmlvbiBvZiBpbmRpYSBhbmQgYW5vdGhlcl8xNjk5MzQxMDE0LnBkZg==',
+                    "summary": 'Involves a dispute between the Lord Krishna Sugar Mills and the Union of India.',
+                    "pdf_pages": '54 pages',
+                    "createdAt":'2024-10-21T15:04:50.534Z'
+                }
+            },
+            {
+                '10': {
+                    "name": 'SUPREME COURT REPORTS 93 NARAYANDAS BHAGWANDAS MADHAVDAS v. THE STATE OF WEST BENGAL',
+                    "size": '538kb',
+                    "url": 'https://digiscr.sci.gov.in/pdf_viewer?dir=YWRtaW4vanVkZ2VtZW50X2ZpbGUvanVkZ2VtZW50X3BkZi8xOTYwL3ZvbHVtZSAxL1BhcnQgSS8xNjk5NTIxMzUwLnBkZg==',
+                    "summary": 'Involved charges of smuggling currency, leading to a conviction upheld by the High Court.',
+                    "pdf_pages": '14 pages',
+                    "createdAt": '2024-10-21T15:04:50.534Z'
+                }
+            },
+            {
+                '11': {
+                    "name": 'THE GRAHAM TRADING CO. (INDIA) LTD. v. ITS WORKMEN',
+                    "size": '263kb',
+                    "url": 'https://digiscr.sci.gov.in/pdf_viewer?dir=YWRtaW4vanVkZ2VtZW50X2ZpbGUvanVkZ2VtZW50X3BkZi8xOTYwL3ZvbHVtZSAxL1BhcnQgSS90aGUgZ3JhaGFtIHRyYWRpbmcgY28uIChpbmRpYSkgbHRkLl9pdHMgd29ya21lbl8xNjk5NTIzNTc3LnBkZg==',
+                    "summary": 'The dispute over bonus payment was ruled in favor of the company, emphasizing profit availability.',
+                    "pdf_pages": '7 pages',
+                    "createdAt": '2024-10-21T15:04:50.534Z'
+                }
+            },
+            {
+                '12': {
+                    "name": 'SUPREME COURT REPORTS [1960(1)] THE COMMISSIONER OF INCOME-TAX, BOMBAY v. H.ANCHHODDAS KARSONDAS, BOMBAY',
+                    "size": '460kb',
+                    "url": 'https://digiscr.sci.gov.in/pdf_viewer?dir=YWRtaW4vanVkZ2VtZW50X2ZpbGUvanVkZ2VtZW50X3BkZi8xOTYwL3ZvbHVtZSAxL1BhcnQgSS90aGUgY29tbWlzc2lvbmVyIG9mIGluY29tZS10YXgsIGJvbWJheWVsYXNzb2FybGdyYXZlZ2FsaW9ybG91cmNlXzE2OTk1MTk4MzIucGRm',
+                    "summary": 'Focused on tax implications for business transactions, providing clarity on assessment procedures.',
+                    "pdf_pages": '131 pages',
+                    "createdAt": '2024-10-21T15:04:50.534Z'
+                }
+            },
+            {
+                '13': {
+                    "name": 'SUPREME COURT REPORTS [1960(1)] JNANENDRA NATH GHOSE v. THE STATE OF WEST BENGAL (SYED JAFER IMAM AND J. L. KAPUR, JJ.)',
+                    "size": '384kb',
+                    "url": 'https://digiscr.sci.gov.in/pdf_viewer?dir=YWRtaW4vanVkZ2VtZW50X2ZpbGUvanVkZ2VtZW50X3BkZi8xOTYwL3ZvbHVtZSAxL1BhcnQgSS8xNjk5NTI2ODA0LnBkZg==',
+                    "summary": 'This case involves Jnanendra Nath Ghose appealing against the State of West Bengal. The judgment was delivered by Justices Syed Jafer Imam and J. L. Kapur.',
+                    "pdf_pages": '11 pages',
+                    "createdAt": '2024-10-21T15:04:50.534Z'
+                }
+            },
+            {
+                '14': {
+                    "name": 'SUPREME COURT REPORTS 137 SHRI B. P. HIRA, WORKS MANAGER, CENTRAL RAILWAY, PAREL, BOMBAY E1:C. v. SHRI C. M. PRADHAN ETC. (B. P. SINHA, P. B. GAJENDRAGADKAR and K. N. WANCHOO, JJ.)',
+                    "size": '490kb',
+                    "url": 'https://digiscr.sci.gov.in/pdf_viewer?dir=YWRtaW4vanVkZ2VtZW50X2ZpbGUvanVkZ2VtZW50X3BkZi8xOTYwL3ZvbHVtZSAxL1BhcnQgSS9zaHJpIGIuIHAuIGhpcmEsIHdvcmtzIG1hbmFnZXIsIGNlbnRyYWwgcmFpbHdheSwgcGFyZWwsIGJvbWJheSBldGMuX3NocmkgYy4gbS4gcHJhZGhhbiBldGMuXzE2OTk1MjcyMTcucGRm',
+                    "summary": "The case of Shri B. P. Hira vs. Shri C. M. Pradhan et al. involved a dispute over overtime wages claimed by employees of the Central Railway. The Supreme Court upheld the High Court's decision, ruling that the employees were not entitled to overtime pay as their work hours were not fixed and they were on a monthly salary.",
+                    "pdf_pages": '13 pages',
+                    "createdAt": '2024-10-21T15:04:50.534Z'
+                }
+            },
+            {
+                '15': {
+                    "name": 'SECURITIES AND EXCHANGE BOARD OF INDIA DIRECTIONS UNDER SECTION 11(4) AND 11B READ WITH REGULATION 11 OF SEBI (PROHIBITION OF FRAUDULENT AND UNFAIR TRADE PRACTICES RELATING TO THE SECURITIES MARKET) REGULATIONS, 2003, AGAINST BIYANI SECURITIES PVT. LTD. AND SHRI HARISH BIYANI IN THE MATTER OF IRREGULAR TRANSACTIONS IN THE SCRIP OF DSQ INDUSTRIES LTD',
+                    "size": '229kb',
+                    "url": 'https://www.sebi.gov.in/sebi_data/attachdocs/1292585113260.pdf',
+                    "summary": 'SEBI issued directives against Biyani Securities Pvt. Ltd. and Shri Harish Biyani for manipulative activities in DSQ Industries Ltd. This included placing false orders to manipulate prices. SEBI imposed fines and a three-year ban on dealing in securities, aiming to deter such practices.',
+                    "pdf_pages": '41 pages',
+                    "createdAt": '2024-10-21T15:04:50.534Z'
+                }
+            },
+            {
+                '16': {
+                    "name": 'CIRCULAR ORDERS OF THE HIGH COURT OF JUDICATURE AT ALLAHABAD (SUPPLEMENT) (FROM 1st APRIL, 2011 TO SEPTEMBER, 2016)',
+                    "size": '2.1mb',
+                    "url": 'https://ijtr.nic.in/Circular%20Orders%20(Supplement).pdf',
+                    "summary": 'This supplement compiles circulars issued by the Allahabad High Court from April 2011 to September 2016, covering guidelines and instructions for legal proceedings.',
+                    "pdf_pages": '106 pages',
+                    "createdAt": '2024-10-21T15:04:50.534Z'
+                }
+            },
+            {
+                '17': {
+                    "name": 'THE PREVENTION OF MONEY-LAUNDERING (MAINTENANCE OF RECORDS) RULES, 2005',
+                    "size": '13.1mb',
+                    "url": 'https://enforcementdirectorate.gov.in/sites/default/files/Act%26rules/The%20Prevention%20of%20Money-laundering%20%28Maintenance%20of%20Records%29%20Rules%2C%202005.pdf',
+                    "summary": 'These rules regulate record maintenance by entities to prevent money laundering, requiring transaction records and suspicious transaction reporting.',
+                    "pdf_pages": '24 pages',
+                    "createdAt": '2024-10-21T15:04:50.534Z'
+                }
+            },
+            {
+                'default':{
+                    "id": 'id_1729523090539',
+                    "numPages": "1",
+                    "summary": '{"summary":"...","keywords":[]}'
+                }
+            }
+
+            // Add more entries as needed
+        ];
+
+        const caseContainer = document.getElementById('case-container');
+
+        data.forEach(entry => {
+            for (const key in entry) {
+                const caseData = entry[key];
+                const caseDiv = document.createElement('div');
+                caseDiv.className = 'case';
+                caseDiv.innerHTML = `
+                    <h2>${caseData.name}</h2>
+                    <p><strong>Size:</strong> ${caseData.size}</p>
+                    <p><strong>URL:</strong> <a href="${caseData.url}" target="_blank">View PDF</a></p>
+                    <p><strong>Summary:</strong> ${caseData.summary}</p>
+                    <p><strong>PDF Pages:</strong> ${caseData.pdf_pages}</p>
+                    <p><strong>Created At:</strong> ${new Date(caseData.createdAt).toLocaleString()}</p>
+                `;
+                caseContainer.appendChild(caseDiv);
+            }
+        });
+    </script>
+
+</body>
+</html>
